@@ -1,73 +1,111 @@
 $(document).ready(function () {
+
+    //add user task
     let nameInp = $(".name-inp");
     let surnameInp = $(".surname-inp");
     let users = [];
 
-    function openModal() {
-        $(".open-btn").click(function () {
-            $(".body-modal").slideDown();
-            $(".body-modal").removeClass("d-none");
-            $(".overlay").css("display", "block")
-            $("ul").css("z-index", "-1")
-            $(".slider").css("z-index", "-1")
+    //enabled button
+    $(".input input").keyup(function () {
+        $(".add-btn").removeAttr("disabled");
+    })
 
-        })
-    }
-    openModal();
-    closeModal();
-
-    function closeModal() {
-        $(".close-btn").click(function () {
-            $(".body-modal").slideUp();
-            $(".body-modal").addClass("d-none");
-            $(".overlay").css("display", "none")
-            $("ul").css("z-index", "1")
-            $(".slider").css("z-index", "1")
-        })
-    }
+    //check localstorage
     if (localStorage.getItem("users") != null) {
         users = JSON.parse(localStorage.getItem("users"));
     }
-
     $(".add-btn").click(function () {
-        $("ul").html("");
-        users.push({
-            id: uuidv4(),
-            name: nameInp.val()[0].toUpperCase().concat(nameInp.val().slice(1)),
-            surname: surnameInp.val()[0].toUpperCase().concat(surnameInp.val().slice(1))
-        })
+        if ($(".name-inp").val() == " " || $(".surname-inp").val() == " ") {
+            removeDnone();
+        }
+        else {
+            $(".add-btn").removeAttr("disabled");
+            addDnone();
+            $("ul").html("");
+            users.push({
+                id: uuidv4(),
+                name: nameInp.val()[0].toUpperCase().concat(nameInp.val().slice(1)),
+                surname: surnameInp.val()[0].toUpperCase().concat(surnameInp.val().slice(1))
+            })
+            localStorage.setItem("users", JSON.stringify(users));
 
-        localStorage.setItem("users", JSON.stringify(users))
-        addUi();
-        $(".body-modal").slideUp();
-        $(".body-modal").addClass("d-none");
-        $(".overlay").css("display", "none");
-        $("ul").css("z-index", "1")
+            addUi();
+            closeModal()
+        }
     })
 
-    addUi();
+
+    //open modal
+    function openModal() {
+        $(".body-modal").slideDown();
+        $(".body-modal").removeClass("d-none");
+        $(".overlay").css("display", "block")
+        $("ul").css("z-index", "-1")
+        $(".slider").css("z-index", "-1")
+        $(".add-btn").attr("disabled", true);
+    }
+    $(".open-btn").click(openModal);
+
+    //close modal
+    function closeModal() {
+        $(".body-modal").slideUp();
+        $(".body-modal").addClass("d-none");
+        $(".body-modal-edit").slideUp();
+        $(".body-modal-edit").addClass("d-none");
+        $(".overlay").css("display", "none")
+        $("ul").css("z-index", "1")
+        $(".slider").css("z-index", "1")
+    }
+    $(".close-btn").click(closeModal);
+
+    //check inputs
+    function removeDnone() {
+        if ($(".empty").hasClass("d-none")) {
+            $(".empty").removeClass("d-none")
+        }
+
+    }
+    function addDnone() {
+        if (!($(".empty").hasClass("d-none"))) {
+            $(".empty").addClass("d-none")
+        }
+
+    }
+
+
+    //get random id
     function uuidv4() {
         return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
             (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
         );
     }
+
+    //add ui
+    addUi();
     function addUi() {
         for (const dbUser of users) {
-            $("ul").append(`
-             <li data-id="${dbUser.id}" class="list-group-item">${dbUser.name} ${dbUser.surname} <i class="fa-solid fa-trash-can item"></i></li>
-            `);
+            $("ul").append(
+                `
+                <li data-id="${dbUser.id}" class="list-group-item">
+                    <span>${dbUser.name} ${dbUser.surname} </span>
+                    <i class="fa-solid fa-trash-can del"></i>
+                    <i class="fa-solid fa-pen-to-square edit"></i>
+                </li>
+            `
+            );
             nameInp.val("")
             surnameInp.val("")
         }
     }
 
+
+    //delete items
     function delItems(id) {
         let existUser = users.filter(u => u.id != id);
         users = existUser;
         localStorage.setItem("users", JSON.stringify(users))
     }
-
-    $(document).on("click", ".item", function () {
+    $(document).on("click", ".del", function () {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -94,19 +132,61 @@ $(document).ready(function () {
 
     })
 
+    //edit items
+    function openEditModal() {
+        $(".body-modal-edit").slideDown();
+        $(".body-modal-edit").removeClass("d-none");
+    }
+    function editItems(id) {
+        let dbUser = users.find(u => u.id == id);
+        let index = users.indexOf(dbUser);
+
+        $(".edit-inp-name").val(`${dbUser.name}`);
+        $(".edit-inp-surname").val(`${dbUser.surname}`);
+
+        $(document).on("click", ".save-btn", function () {
+            for (let user of users) {
+                user = dbUser;
+                user.name = $(".edit-inp-name").val()[0].toUpperCase().concat($(".edit-inp-name").val().slice(1));
+                user.surname = $(".edit-inp-surname").val()[0].toUpperCase().concat($(".edit-inp-surname").val().slice(1))
+
+            }
+
+            localStorage.setItem("users", JSON.stringify(users));
+            $(this).parent().parent().parent().parent().next().children().eq(index)
+               .html(`
+               <span>${dbUser.name} ${dbUser.surname} </span>
+               <i class="fa-solid fa-trash-can del"></i>
+               <i class="fa-solid fa-pen-to-square edit"></i>`);
+            closeModal();
+        })
+    }
+    $(document).on("click", ".edit", function () {
+        openEditModal();
+        for (const user of users) {
+            if (user.id == $(this).parent().attr("data-id")) {
+                editItems(user.id)
+            }
+        }
+    })
+
+
+
+
+
 
     //slider
     function rigthSlider() {
-       
-            let activeSlider = $(".active-slider");
-            if (activeSlider.next().length != 0) {
-                activeSlider.removeClass("active-slider");
-                activeSlider.next().addClass("active-slider");
-            }
-            else {
-                activeSlider.removeClass("active-slider");
-                activeSlider.parent().children().eq(0).addClass("active-slider");
-            }
+
+        let activeSlider = $(".active-slider");
+        if (activeSlider.next().length != 0) {
+            activeSlider.removeClass("active-slider");
+            activeSlider.next().addClass("active-slider");
+        }
+        else {
+            activeSlider.removeClass("active-slider");
+            activeSlider.parent().children().eq(0).addClass("active-slider");
+        }
 
     }
     function leftSlider() {
@@ -121,12 +201,12 @@ $(document).ready(function () {
         }
     }
 
-   $(document).on("click", ".left", leftSlider) 
-   $(document).on("click", ".right", rigthSlider)
-   $(document).on("mouseover", ".left", leftSlider) 
-   $(document).on("mouseover", ".right", rigthSlider)
+    $(document).on("click", ".left", leftSlider)
+    $(document).on("click", ".right", rigthSlider)
+    $(document).on("mouseover", ".left", leftSlider)
+    $(document).on("mouseover", ".right", rigthSlider)
 
-   setInterval(() => {
-    rigthSlider()
-   }, 2000);
+    setInterval(() => {
+        rigthSlider()
+    }, 2000);
 })

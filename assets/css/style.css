@@ -4,18 +4,17 @@
     z-index: 2;
 }
 
-.body-modal .content {
+ .content {
     width: 500px;
     margin: 0 auto;
     padding: 20px;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
     border-radius: 20px;
-    /* transform: translateY(-350px); */
     transition: all .8s;
 }
 
-.body-modal .content .title i {
+ .content .title i {
     font-size: 25px;
     cursor: pointer;
 }
@@ -26,10 +25,6 @@
     background-color: black;
     margin: 10px 0;
 }
-/* 
-.active-modal {
-    transform: translateY(0) !important;
-} */
 
 .overlay {
     position: fixed;
@@ -40,20 +35,31 @@
     left: 0;
     background-color: rgba(0, 0, 0, 0.5);
 }
+
 li{
     cursor: pointer;
-    margin-bottom: 10px;
 }
 li i{
     float: right;
     color: red;
     font-size: 20px;
 }
+.edit{
+    margin-right: 10px;
+    color: green;
+}
 
 ul{
     position: relative;
 }
-
+.modal-edit{
+    width: 500px;
+    border: 1px solid black;
+    padding: 50px;
+    border-radius: 20px;
+    position: relative;
+    left: 28%;
+}
 
 
 /* slider */

@@ -27,11 +27,27 @@
                     <div class="input">
                         <input type="text" placeholder="Name" class="form-control name-inp mb-3">
                         <input type="text" placeholder="Surname" class="form-control surname-inp">
-                        <button class="btn btn-outline-primary my-4 add-btn">Add</button>
+                        <p class="text-danger d-none empty">Can not be empty</p>
+                        <button class="btn btn-outline-primary my-4 add-btn" disabled>Add</button>
                     </div>
                 </div>
             </div>
-
+            <span></span>
+            <div class="body-modal-edit d-none">
+                <div class="content">
+                    <div class="title d-flex justify-content-between align-items-center">
+                        <h2>Edit</h2>
+                        <i class="fa-solid fa-xmark close-btn"></i>
+                    </div>
+                    <div class="edit-input">
+                        <label for="">Name</label>
+                        <input type="text" class="edit-inp-name form-control mb-3">
+                        <label for="">Surname</label>
+                        <input type="text" class="edit-inp-surname form-control">
+                        <button class="save-btn btn btn-primary mt-4">Save</button>
+                    </div>
+                </div>
+            </div>
         </div>
         <ul class="list-group mt-5">
 
@@ -42,9 +58,9 @@
             <i class="fa-solid fa-chevron-left left"></i>
             <i class="fa-solid fa-chevron-right right"></i>
             <div class="img">
-                <img  class="active-slider" src="./assets/imgs/slider1.jpg "  alt="">
-                <img  src="./assets/imgs/slider2.jpg"  alt="">
-                <img  src="./assets/imgs/slider3.jpg" alt="">
+                <img class="active-slider" src="./assets/imgs/slider1.jpg " alt="">
+                <img src="./assets/imgs/slider2.jpg" alt="">
+                <img src="./assets/imgs/slider3.jpg" alt="">
             </div>
         </div>
 

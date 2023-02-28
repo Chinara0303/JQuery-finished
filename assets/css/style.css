@@ -1,0 +1,96 @@
+
+.body-modal {
+    position: relative;
+    z-index: 2;
+}
+
+.body-modal .content {
+    width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    border-radius: 20px;
+    /* transform: translateY(-350px); */
+    transition: all .8s;
+}
+
+.body-modal .content .title i {
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.body-modal .line {
+    height: 1px;
+    width: 100%;
+    background-color: black;
+    margin: 10px 0;
+}
+/* 
+.active-modal {
+    transform: translateY(0) !important;
+} */
+
+.overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+li{
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+li i{
+    float: right;
+    color: red;
+    font-size: 20px;
+}
+
+ul{
+    position: relative;
+}
+
+
+
+/* slider */
+.slider {
+    position: relative;
+}
+
+.slider .img {
+    overflow: hidden;
+}
+
+.slider .img img {
+    position: absolute;
+    width: 100%;
+    height: 400px;
+    transition: all 1s;
+    opacity: 0;
+}
+
+.slider i {
+    font-size: 30px;
+    color: white;
+    position: absolute;
+    top: 210px;
+    transform: translate(-50%);
+    z-index: 1;
+    cursor: pointer;
+}
+
+.slider .left {
+    left: 20px;
+}
+
+.slider .right {
+    right: 20px;
+}
+
+.active-slider {
+    opacity: 1 !important;
+}

@@ -11,15 +11,44 @@
 </head>
 
 <body>
-   <div class="container my-5">
-    <input type="text" placeholder="Name"  class="form-control name-inp">
-    <input type="text" placeholder="Surname" class="form-control surname-inp">
-    <button class="btn btn-outline-primary my-4">Add</button>
-    <ul class="list-group">
-       
-    </ul>
-   </div>
 
+
+    <div class="container">
+        <div class="overlay"></div>
+        <div class="modal-container mt-5">
+            <button class="btn btn-primary open-btn">Click me</button>
+            <div class="body-modal d-none">
+                <div class="content ">
+                    <div class="title d-flex justify-content-between align-items-center">
+                        <h2>Modal title</h2>
+                        <i class="fa-solid fa-xmark close-btn"></i>
+                    </div>
+                    <div class="line"></div>
+                    <div class="input">
+                        <input type="text" placeholder="Name" class="form-control name-inp mb-3">
+                        <input type="text" placeholder="Surname" class="form-control surname-inp">
+                        <button class="btn btn-outline-primary my-4 add-btn">Add</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <ul class="list-group mt-5">
+
+        </ul>
+
+
+        <div class="slider mt-5">
+            <i class="fa-solid fa-chevron-left left"></i>
+            <i class="fa-solid fa-chevron-right right"></i>
+            <div class="img">
+                <img  class="active-slider" src="./assets/imgs/slider1.jpg "  alt="">
+                <img  src="./assets/imgs/slider2.jpg"  alt="">
+                <img  src="./assets/imgs/slider3.jpg" alt="">
+            </div>
+        </div>
+
+    </div>
 
 
 
@@ -28,6 +57,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
         integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./assets/js/script.js"></script>
 </body>
 
